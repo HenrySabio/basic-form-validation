@@ -23,10 +23,10 @@ const showSuccess = input => {
 function checkEmail(email) {
     const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
-    if(regEx.test(input.value.trim())) {
-        showSuccess(input);
+    if(regEx.test(email.value.trim())) {
+        showSuccess(email);
     } else {
-        showError(input, 'Email is not valid')
+        showError(email, 'Email is not valid')
     }
 }
 
@@ -52,6 +52,15 @@ function checkLength (input, min, max) {
     }
 }
 
+// Check if passwords match 
+function checkPasswordMatch(input1, input2) {
+    if (input1.value !== input2.value) {
+        showError(input2, 'Passwords do not match')
+    } else {
+        showSuccess(input)
+    }
+}
+
 function getFieldName(input) {
     return input.id.charAt(0).toUpperCase() + input.id.slice(1)
 }
@@ -63,7 +72,8 @@ form.addEventListener('submit', function (event) {
     checkRequired(Object.keys(formData));
     checkLength(formData.username, 3, 15);
     checkLength(formData.password, 6, 25);
-    checkEmail(email);
+    checkEmail(formData.email);
+    checkPasswordMatch(formData.password, formData.password2);
 
     // **Long way - Gets messy if we have more fields to check.**
 
