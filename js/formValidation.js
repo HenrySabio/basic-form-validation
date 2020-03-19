@@ -20,9 +20,14 @@ const showSuccess = input => {
 }
 
 // Check for valid email
-function isValidEmail(email) {
-    const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return regEx.test(String(email).toLowerCase());
+function checkEmail(email) {
+    const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
+
+    if(regEx.test(input.value.trim())) {
+        showSuccess(input);
+    } else {
+        showError(input, 'Email is not valid')
+    }
 }
 
 function checkRequired(inputObj) {
@@ -58,6 +63,7 @@ form.addEventListener('submit', function (event) {
     checkRequired(Object.keys(formData));
     checkLength(formData.username, 3, 15);
     checkLength(formData.password, 6, 25);
+    checkEmail(email);
 
     // **Long way - Gets messy if we have more fields to check.**
 
